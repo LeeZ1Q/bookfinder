@@ -12,11 +12,11 @@ import {
   Popper,
   ClickAwayListener,
 } from '@mui/material';
-import background from '../images/background.jpg';
+import background from '../../images/background.jpg';
 import { Menu as MenuIcon ,Search as SearchIcon } from '@mui/icons-material';
-
-
 import React from 'react';
+import { useDispatch } from 'react-redux';
+import { fetchData } from './SearchSlice';
 
 const Search = () => {
   const [open, setOpen] = React.useState(false);
@@ -24,6 +24,8 @@ const Search = () => {
   const [searchTerm, setSearchTerm] = React.useState('');
   const [searchBy, setSearchBy] = React.useState('all');
 
+
+  const dispatch = useDispatch();
   let by;
   switch (searchBy) {
     case 'all':
@@ -58,6 +60,11 @@ const Search = () => {
   const handelSubmit = (e) => {
     e.preventDefault();
     setSearchTerm('');
+    dispatch(
+      fetchData(
+        `https://www.googleapis.com/books/v1/volumes?q=${searchTerm}+${searchBy}`
+      )
+    );
   };
 
 
@@ -124,7 +131,7 @@ const Search = () => {
         <Divider orientation='vertical' variant="middle" flexItem  />
         <InputBase
           fullWidth
-          placeholder={`Search Books  ${by}...` }
+          placeholder={`Search Books ${by}...` }
           autoFocus
           sx={{ ml: 1, flex: 1 }}
           value={searchTerm}
