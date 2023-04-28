@@ -21,17 +21,52 @@ import React from 'react';
 const Search = () => {
   const [open, setOpen] = React.useState(false);
   const anchorRef = React.useRef(null);
+  const [searchTerm, setSearchTerm] = React.useState('');
+  const [searchBy, setSearchBy] = React.useState('all');
+
+  let by;
+  switch (searchBy) {
+    case 'all':
+      by = '';
+      break;
+    case 'title':
+      by = 'by Title';
+      break;
+    case 'author':
+      by = 'by Author';
+      break;
+    case 'publisher':
+      by = 'by Publisher';
+      break;
+    case 'isbn':
+      by = 'by ISBN';
+  }
 
   const handleToggle = () => {
     setOpen((prevOpen) => !prevOpen);
   };
 
+  const handleChange = (e) => {
+    setSearchTerm(e.target.value);
+  };
+
+  const handleSelect = (term) => {
+    setOpen((prevOpen) => !prevOpen);
+    setSearchBy(term);
+  };
+
+  const handelSubmit = (e) => {
+    e.preventDefault();
+    setSearchTerm('');
+  };
+
+
   const handleClose = (event) => {
     if (anchorRef.current && anchorRef.current.contains(event.target)) {
       return;
     }
-
     setOpen(false);
+    
   };
 
   function handleListKeyDown(event) {
@@ -75,15 +110,38 @@ const Search = () => {
           width: { xs: '80%', sm: '50%' },
           margin: '0 auto',
         }}
+        onSubmit={handelSubmit}
       > 
 
-       
-        <IconButton
-          ref={anchorRef}
-          onClick={handleToggle}
+        <Tooltip title='Search By' placement='top' disableFocusListener >
+          <IconButton
+            ref={anchorRef}
+            onClick={handleToggle}
+          >
+            <MenuIcon/>
+          </IconButton>
+        </Tooltip>
+        <Divider orientation='vertical' variant="middle" flexItem  />
+        <InputBase
+          fullWidth
+          placeholder={`Search Books  ${by}...` }
+          autoFocus
+          sx={{ ml: 1, flex: 1 }}
+          value={searchTerm}
+          onChange={(e) => handleChange(e)}
+        />
+        <Divider orientation='vertical' variant="middle" flexItem  />
+        <Button
+          color='primary'
+          variant='contained'
+          startIcon={<SearchIcon />}
+          type='submmit'
+          sx={{ display: { xs: 'none', sm: 'flex' } }}
         >
-          <MenuIcon/>
-        </IconButton>
+          Search
+        </Button>
+        
+        
         <Popper
           open={open}
           anchorEl={anchorRef.current}
@@ -106,11 +164,15 @@ const Search = () => {
                     autoFocusItem={open}
                     onKeyDown={handleListKeyDown}
                   >
-                    <MenuItem onClick={handleClose}>All</MenuItem>
-                    <MenuItem onClick={handleClose}>Title</MenuItem>
-                    <MenuItem onClick={handleClose}>Author</MenuItem>
-                    <MenuItem onClick={handleClose}>Publisher</MenuItem>
-                    <MenuItem onClick={handleClose}>ISBN</MenuItem>
+                    <MenuItem onClick={() => handleSelect('all')}>All</MenuItem>
+                    <Divider variant='middle' />
+                    <MenuItem onClick={() => handleSelect('title')}>Title</MenuItem>
+                    <Divider variant='middle' />
+                    <MenuItem onClick={() => handleSelect('author')}>Author</MenuItem>
+                    <Divider variant='middle' />
+                    <MenuItem onClick={() => handleSelect('publisher')}>Publisher</MenuItem>
+                    <Divider variant='middle' />
+                    <MenuItem onClick={() => handleSelect('isbn')}>ISBN</MenuItem>
                   </MenuList>
                 </ClickAwayListener>
               </Paper>
@@ -118,22 +180,6 @@ const Search = () => {
           )}
         </Popper>
         
-
-
-        <Divider orientation='vertical' variant="middle" flexItem  />
-        <InputBase
-          fullWidth
-          placeholder='Search Books ... '
-          autoFocus
-          sx={{ ml: 1, flex: 1 }}
-        />
-        <Divider orientation='vertical' variant="middle" flexItem  />
-        <Tooltip title='Search'>
-          <IconButton>
-            <SearchIcon />
-          </IconButton>
-        </Tooltip>
-
         
       </Paper>
 
