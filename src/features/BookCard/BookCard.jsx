@@ -30,7 +30,7 @@ const BookCard = ({ book }) => {
             component='img'
             image={book.volumeInfo.imageLinks.smallThumbnail}
             sx={{
-              width: { xs: '100px', sm: '80px' },
+              width: { xs: '150px', sm: '100px' },
               maxHeight: 200,
               borderRadius: 1,
             }}
@@ -40,7 +40,7 @@ const BookCard = ({ book }) => {
           variant='rounded'
           animation={false}
           sx={{
-            width: { xs: '100px', sm: '80px' },
+            width: { xs: '150px', sm: '100px' },
             maxHeight: 200,
           }}
         />
@@ -48,15 +48,19 @@ const BookCard = ({ book }) => {
       </Box>
       <Box sx={{ ml:1 }}>
         <Typography
-          variant='h5'
+          variant='h6'
           component='a'
           href={book.volumeInfo.infoLink}
           target='_blank'
-          sx={{ color: 'text.primary', ':hover': { color: 'primary.dark' } }}
+          sx={{ 
+            color: 'text.primary', 
+            ':hover': { color: 'primary.dark' } ,
+            lineHeight: 1.2,
+          }}
         >
           {book.volumeInfo.title}
         </Typography>
-        <CardContent sx={{ p: 0 }}>
+        <CardContent sx={{ p: 0, mt: 0.5 }}>
           {book.volumeInfo.authors && (
             <Typography variant='span' color='text.secondary'>
               {book.volumeInfo.authors[0]}

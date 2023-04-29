@@ -59,8 +59,8 @@ const Search = () => {
     setSearchTerm('');
     dispatch(
       fetchData(
-        `https://www.googleapis.com/books/v1/volumes?q=${searchTerm}+${searchBy}`
-      )
+        `https://www.googleapis.com/books/v1/volumes?q=${searchTerm} + ${searchBy}&maxResults=40`
+        )
     );
   };
 
@@ -99,7 +99,7 @@ const Search = () => {
           background: `url(${background}) `,
           backgroundPosition: '0 65%',
           backgroundSize: 'cover',
-          width: '100vw',
+          width: '100%',
           height: '25vh',
         }}
       />
