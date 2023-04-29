@@ -3,6 +3,7 @@ import './App.css';
 import Search from './features/Search/Search';
 import Loading from './features/Loading/Loading';
 import { useSelector } from 'react-redux';
+import BookList from './features/BookList/BookList';
 
 function App() {
   const status = useSelector(state => state.search.status);
@@ -13,7 +14,7 @@ function App() {
       content = <Loading />;
       break;
     case 'fulfilled':
-      content = <h1>fulfilled</h1>;
+      content = <BookList />;
       break;
     case 'rejected':
       content = <h1>rejected</h1>;
@@ -21,7 +22,11 @@ function App() {
   }
 
   return (
-      <Box className='App'>
+      <Box 
+        className='App'
+        bgcolor='background.default'
+        sx={{ minHeight: '100vh' }}
+      >
         <Search />
         {content}
       </Box>

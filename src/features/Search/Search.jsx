@@ -37,9 +37,6 @@ const Search = () => {
     case 'author':
       by = 'by Author';
       break;
-    case 'publisher':
-      by = 'by Publisher';
-      break;
     case 'isbn':
       by = 'by ISBN';
   }
@@ -176,8 +173,6 @@ const Search = () => {
                     <MenuItem onClick={() => handleSelect('title')}>Title</MenuItem>
                     <Divider variant='middle' />
                     <MenuItem onClick={() => handleSelect('author')}>Author</MenuItem>
-                    <Divider variant='middle' />
-                    <MenuItem onClick={() => handleSelect('publisher')}>Publisher</MenuItem>
                     <Divider variant='middle' />
                     <MenuItem onClick={() => handleSelect('isbn')}>ISBN</MenuItem>
                   </MenuList>
